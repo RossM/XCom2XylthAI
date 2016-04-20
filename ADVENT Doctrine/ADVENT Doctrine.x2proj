@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Guid>2df6fcba-cb19-4117-86e7-411c0dcd1713</Guid>
+    <Name>ADVENT Doctrine</Name>
+    <Description>An AI mod</Description>
+    <SteamPublishID>0</SteamPublishID>
+    <AssemblyName>ADVENT Doctrine</AssemblyName>
+    <RootNamespace>ADVENT Doctrine</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Config\XComAI.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildLocalExtensionPath)\XCOM2.targets" />
+</Project>
