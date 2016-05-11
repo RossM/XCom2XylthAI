@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # XCOM ModBuddy Solution File, Format Version 11.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{5DAE07AF-E217-45C1-8DE7-FF99D6011E8A}") = "ADVENT Doctrine", "ADVENT Doctrine\ADVENT Doctrine.x2proj", "{AC04CBCE-0D65-45DF-B02D-7BFED9EFD9A5}"
+Project("{5DAE07AF-E217-45C1-8DE7-FF99D6011E8A}") = "ADVENT Doctrine", "ADVENT Doctrine\ADVENT Doctrine.x2proj", "{F40AC7C6-4416-48F4-8565-722ED2393D42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|XCOM 2 = Default|XCOM 2
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC04CBCE-0D65-45DF-B02D-7BFED9EFD9A5}.Default|XCOM 2.ActiveCfg = Default|XCOM 2
-		{AC04CBCE-0D65-45DF-B02D-7BFED9EFD9A5}.Default|XCOM 2.Build.0 = Default|XCOM 2
+		{F40AC7C6-4416-48F4-8565-722ED2393D42}.Default|XCOM 2.ActiveCfg = Default|XCOM 2
+		{F40AC7C6-4416-48F4-8565-722ED2393D42}.Default|XCOM 2.Build.0 = Default|XCOM 2
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
