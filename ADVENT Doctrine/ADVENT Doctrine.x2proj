@@ -29,6 +29,9 @@ Good luck, Commander</Description>
     <Content Include="Config\XComAI.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModPreview.jpg">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
