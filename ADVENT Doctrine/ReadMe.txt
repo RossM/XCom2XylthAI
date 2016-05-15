@@ -1,6 +1,6 @@
 ﻿The goal of this mod is to make the enemy AI more interesting. Not stronger, or weaker, but more interesting. Each alien type will get its own personality and quirks that show through in its battlefield behavior. Currently the mod includes support for all ADVENT troops except turrets, plus Sectoids, Vipers, and Mutons. Other alien types will continue to use the old AI.
 
-Obviously, this mod is not compatible with other AI patches, including A Better ADVENT.
+This mod is compatible with A Better ADVENT.
 
 ADVENT
 "They're disciplined and well equipped, but their obedience makes them predictable."
