@@ -22,23 +22,46 @@ As the backbone of the alien army, Mutons are well-organized and tactically soun
 
 Good luck, Commander</Description>
     <SteamPublishID>0</SteamPublishID>
-    <AssemblyName>ADVENT Doctrine</AssemblyName>
-    <RootNamespace>ADVENT Doctrine</RootNamespace>
+    <AssemblyName>AdventDoctrine</AssemblyName>
+    <RootNamespace>AdventDoctrine</RootNamespace>
+    <ProjectGuid>{c0bf4dcb-17fa-454a-929a-850e92ec4188}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Config\XComAI.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComEditor.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComEngine.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComGame.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComGameCore.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\XComGame.int">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModPreview.jpg">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ReadMe.txt" />
+    <Content Include="Src\AdventDoctrine\Classes\X2Ability_AdventDoctrine.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AdventDoctrine\Classes\X2DownloadableContentInfo_AdventDoctrine.uc">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config" />
+    <Folder Include="Localization" />
+    <Folder Include="Src" />
+    <Folder Include="Src\AdventDoctrine" />
+    <Folder Include="Src\AdventDoctrine\Classes" />
   </ItemGroup>
   <Import Project="$(MSBuildLocalExtensionPath)\XCOM2.targets" />
 </Project>
