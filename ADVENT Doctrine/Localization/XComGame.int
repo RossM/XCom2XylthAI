@@ -1,5 +1,7 @@
 [ShowMutonBloodlustFlyover X2AbilityTemplate]
 LocFriendlyName="AI: Muton Bloodlust"
+LocFlyOverText="AI: Muton Bloodlust"
 
 [ShowSectoidPanicFlyover X2AbilityTemplate]
-LocFriendlyName="AI: SectoidPanic"
+LocFriendlyName="AI: Sectoid Panic"
+LocFlyOverText="AI: Sectoid Panic"

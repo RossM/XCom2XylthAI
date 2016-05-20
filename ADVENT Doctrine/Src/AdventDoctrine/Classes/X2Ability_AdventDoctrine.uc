@@ -37,7 +37,8 @@ static function X2AbilityTemplate ShowMutonBloodlustFlyover()
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
 
 	Template.bShowActivation = true;
-	Template.bSkipFireAction = true;
+	Template.bSkipExitCoverWhenFiring = true;
+	Template.CustomFireAnim = 'HL_SignalPositiveA';
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
@@ -72,10 +73,12 @@ static function X2AbilityTemplate ShowSectoidPanicFlyover()
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
 
 	Template.bShowActivation = true;
-	Template.bSkipFireAction = true;
+	Template.bSkipExitCoverWhenFiring = true;
+	Template.CustomFireAnim = 'HL_CallReinforcementsA';
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
 
 	return Template;
 }
+
