@@ -4,19 +4,21 @@ static function array<X2DataTemplate> CreateTemplates()
 {
 	local array<X2DataTemplate> Templates;
 	
-	Templates.AddItem(ShowMutonBloodlustFlyover());
-	Templates.AddItem(ShowSectoidPanicFlyover());
+	Templates.AddItem(AddAIFlyover('ShowMutonBloodlustFlyover'));
+	Templates.AddItem(AddAIAnimation('ShowMutonBloodlustAnim', 'HL_SignalPositiveA'));
+	Templates.AddItem(AddAIFlyover('ShowSectoidPanicFlyover'));
+	Templates.AddItem(AddAIAnimation('ShowSectoidPanicAnim', 'HL_CallReinforcementsA'));
 
 	return Templates;
 }
 
-static function X2AbilityTemplate ShowMutonBloodlustFlyover()
+static function X2AbilityTemplate AddAIFlyover(name DataName)
 {
 	local X2AbilityTemplate                 Template;		
 	local X2AbilityCost_ActionPoints        ActionPointCost;	
 	local X2AbilityCooldown					Cooldown;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'ShowMutonBloodlustFlyover');
+	`CREATE_X2ABILITY_TEMPLATE(Template, DataName);
 
 	// Icon Properties
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_unknown";
@@ -37,8 +39,7 @@ static function X2AbilityTemplate ShowMutonBloodlustFlyover()
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
 
 	Template.bShowActivation = true;
-	Template.bSkipExitCoverWhenFiring = true;
-	Template.CustomFireAnim = 'HL_SignalPositiveA';
+	Template.bSkipFireAction = true;
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
@@ -46,13 +47,13 @@ static function X2AbilityTemplate ShowMutonBloodlustFlyover()
 	return Template;
 }
 
-static function X2AbilityTemplate ShowSectoidPanicFlyover()
+static function X2AbilityTemplate AddAIAnimation(name DataName, name FireAnim)
 {
 	local X2AbilityTemplate                 Template;		
 	local X2AbilityCost_ActionPoints        ActionPointCost;	
 	local X2AbilityCooldown					Cooldown;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'ShowSectoidPanicFlyover');
+	`CREATE_X2ABILITY_TEMPLATE(Template, DataName);
 
 	// Icon Properties
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_unknown";
@@ -64,7 +65,7 @@ static function X2AbilityTemplate ShowSectoidPanicFlyover()
 	ActionPointCost.bFreeCost = true;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
-	Cooldown = new class'X2AbilityCooldown';
+	Cooldown = new class'X2AbilityCooldown_Global';
 	Cooldown.iNumTurns = 1;
 	Template.AbilityCooldown = Cooldown;
 
@@ -72,9 +73,8 @@ static function X2AbilityTemplate ShowSectoidPanicFlyover()
 	Template.AbilityTargetStyle = default.SelfTarget;
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
 
-	Template.bShowActivation = true;
 	Template.bSkipExitCoverWhenFiring = true;
-	Template.CustomFireAnim = 'HL_CallReinforcementsA';
+	Template.CustomFireAnim = FireAnim;
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;

@@ -41,11 +41,13 @@ static event OnPostTemplatesCreated()
 	foreach DataTemplateAllDifficulties(DataTemplate)
 	{
 		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowMutonBloodlustFlyover');
+		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowMutonBloodlustAnim');
 	}
 
 	CharacterMgr.FindDataTemplateAllDifficulties('Sectoid', DataTemplateAllDifficulties);
 	foreach DataTemplateAllDifficulties(DataTemplate)
 	{
 		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicFlyover');
+		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicAnim');
 	}
 }
