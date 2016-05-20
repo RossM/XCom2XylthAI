@@ -9,6 +9,8 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(AddAIFlyover('ShowSectoidPanicFlyover'));
 	Templates.AddItem(AddAIAnimation('ShowSectoidPanicAnim', 'HL_CallReinforcementsA'));
 
+	Templates.AddItem(AddAIFlyover('ShowGenericAIFlyover'));
+
 	return Templates;
 }
 

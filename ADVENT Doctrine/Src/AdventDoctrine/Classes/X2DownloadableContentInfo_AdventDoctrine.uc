@@ -32,8 +32,11 @@ static event InstallNewCampaign(XComGameState StartState)
 static event OnPostTemplatesCreated()
 {
 	local X2DataTemplate DataTemplate;
+	local X2CharacterTemplate Template;
 	local array<X2DataTemplate> DataTemplateAllDifficulties;
 	local X2CharacterTemplateManager CharacterMgr;
+	local array<name> TemplateNames;
+	local name TemplateName;
 
 	CharacterMgr = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
 
@@ -49,5 +52,20 @@ static event OnPostTemplatesCreated()
 	{
 		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicFlyover');
 		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicAnim');
+	}
+
+	CharacterMgr.GetTemplateNames(TemplateNames);
+	foreach TemplateNames(TemplateName)
+	{
+		CharacterMgr.FindDataTemplateAllDifficulties(TemplateName, DataTemplateAllDifficulties);
+		foreach DataTemplateAllDifficulties(DataTemplate)
+		{
+			Template = X2CharacterTemplate(DataTemplate);
+
+			if (Template.bIsAdvent || Template.bIsAlien)
+			{
+				Template.Abilities.AddItem('ShowGenericAIFlyover');
+			}
+		}
 	}
 }
