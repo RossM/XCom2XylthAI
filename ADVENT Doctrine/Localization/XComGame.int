@@ -4,5 +4,8 @@ LocFriendlyName="AI: Muton Bloodlust"
 [ShowSectoidPanicFlyover X2AbilityTemplate]
 LocFriendlyName="AI: Sectoid Panic"
 
+[ShowViperThreatenedFlyover X2AbilityTemplate]
+LocFriendlyName="AI: Viper Threatened"
+
 [ShowGenericAIFlyover X2AbilityTemplate]
 LocFriendlyName="AI: Generic Flyover"

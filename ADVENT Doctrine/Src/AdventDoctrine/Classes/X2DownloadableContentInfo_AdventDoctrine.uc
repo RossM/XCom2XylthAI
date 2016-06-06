@@ -54,6 +54,13 @@ static event OnPostTemplatesCreated()
 		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicAnim');
 	}
 
+	CharacterMgr.FindDataTemplateAllDifficulties('Viper', DataTemplateAllDifficulties);
+	foreach DataTemplateAllDifficulties(DataTemplate)
+	{
+		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowViperThreatenedFlyover');
+		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowViperThreatenedAnim');
+	}
+
 	CharacterMgr.GetTemplateNames(TemplateNames);
 	foreach TemplateNames(TemplateName)
 	{
