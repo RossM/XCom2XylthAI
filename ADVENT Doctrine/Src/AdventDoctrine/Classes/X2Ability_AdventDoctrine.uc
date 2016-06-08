@@ -1,4 +1,6 @@
-class X2Ability_AdventDoctrine extends X2Ability;
+class X2Ability_AdventDoctrine extends X2Ability config(AIOptions);
+
+var config bool bShowAIFlyovers;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -26,7 +28,7 @@ static function X2AbilityTemplate AddAIFlyover(name DataName)
 
 	// Icon Properties
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_unknown";
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
+	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
@@ -42,7 +44,7 @@ static function X2AbilityTemplate AddAIFlyover(name DataName)
 	Template.AbilityTargetStyle = default.SelfTarget;
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
 
-	Template.bShowActivation = true;
+	Template.bShowActivation = default.bShowAIFlyovers;
 	Template.bSkipFireAction = true;
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
@@ -61,7 +63,7 @@ static function X2AbilityTemplate AddAIAnimation(name DataName, name FireAnim)
 
 	// Icon Properties
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_unknown";
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
+	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
