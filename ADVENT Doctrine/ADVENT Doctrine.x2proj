@@ -52,6 +52,12 @@ Good luck, Commander</Description>
     <Content Include="Src\AdventDoctrine\Classes\X2Ability_AdventDoctrine.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\AdventDoctrine\Classes\X2AIBTAdventDoctrineActions.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AdventDoctrine\Classes\X2AIBTAdventDoctrineConditions.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\AdventDoctrine\Classes\X2DownloadableContentInfo_AdventDoctrine.uc">
       <SubType>Content</SubType>
     </Content>

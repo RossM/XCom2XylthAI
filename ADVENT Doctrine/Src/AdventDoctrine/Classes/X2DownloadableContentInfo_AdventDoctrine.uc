@@ -40,27 +40,6 @@ static event OnPostTemplatesCreated()
 
 	CharacterMgr = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
 
-	CharacterMgr.FindDataTemplateAllDifficulties('Muton', DataTemplateAllDifficulties);
-	foreach DataTemplateAllDifficulties(DataTemplate)
-	{
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowMutonBloodlustFlyover');
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowMutonBloodlustAnim');
-	}
-
-	CharacterMgr.FindDataTemplateAllDifficulties('Sectoid', DataTemplateAllDifficulties);
-	foreach DataTemplateAllDifficulties(DataTemplate)
-	{
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicFlyover');
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowSectoidPanicAnim');
-	}
-
-	CharacterMgr.FindDataTemplateAllDifficulties('Viper', DataTemplateAllDifficulties);
-	foreach DataTemplateAllDifficulties(DataTemplate)
-	{
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowViperThreatenedFlyover');
-		X2CharacterTemplate(DataTemplate).Abilities.AddItem('ShowViperThreatenedAnim');
-	}
-
 	CharacterMgr.GetTemplateNames(TemplateNames);
 	foreach TemplateNames(TemplateName)
 	{

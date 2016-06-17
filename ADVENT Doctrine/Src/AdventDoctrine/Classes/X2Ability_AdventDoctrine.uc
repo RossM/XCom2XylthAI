@@ -6,13 +6,6 @@ static function array<X2DataTemplate> CreateTemplates()
 {
 	local array<X2DataTemplate> Templates;
 	
-	Templates.AddItem(AddAIFlyover('ShowMutonBloodlustFlyover'));
-	Templates.AddItem(AddAIAnimation('ShowMutonBloodlustAnim', 'HL_SignalPositiveA'));
-	Templates.AddItem(AddAIFlyover('ShowSectoidPanicFlyover'));
-	Templates.AddItem(AddAIAnimation('ShowSectoidPanicAnim', 'HL_CallReinforcementsA'));
-	Templates.AddItem(AddAIFlyover('ShowViperThreatenedFlyover'));
-	Templates.AddItem(AddAIAnimation('ShowViperThreatenedAnim', 'HL_SignalNegativeA'));
-
 	Templates.AddItem(AddAIFlyover('ShowGenericAIFlyover'));
 
 	return Templates;

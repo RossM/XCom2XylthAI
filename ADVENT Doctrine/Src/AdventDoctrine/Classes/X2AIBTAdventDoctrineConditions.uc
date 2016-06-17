@@ -1,0 +1,1 @@
+class X2AIBTAdventDoctrineConditions extends X2AIBTDefaultConditions;
