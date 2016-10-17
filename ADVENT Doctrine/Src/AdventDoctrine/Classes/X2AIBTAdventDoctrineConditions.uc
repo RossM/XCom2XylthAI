@@ -1,4 +1,12 @@
-class X2AIBTAdventDoctrineConditions extends X2AIBTDefaultConditions;
+class X2AIBTAdventDoctrineConditions extends X2AIBTDefaultConditions config(ImmersiveAI);
+
+struct AIConfigData
+{
+	var name DataName;
+	var string Job;
+};
+
+var config array<AIConfigData> AIConfig;
 
 static event bool FindBTConditionDelegate(name strName, optional out delegate<BTConditionDelegate> dOutFn, optional out Name NameParam)
 {
@@ -44,16 +52,23 @@ function bt_status DoesTargetHaveItem()
 function bt_status IsMyPreferredJob()
 {
 	local XComGameState_AIUnitData AIUnitData;
+	local int index;
 
-	switch (m_kUnitState.GetMyTemplateName())
+	index = default.AIConfigs.Find('DataName', m_kUnitState.GetMyTemplateName());
+	if (index != INDEX_NONE)
 	{
-	default:
+		if (default.AIConfigs[index].Job ~= SplitNameParam)
+		{
+			return BTS_SUCCESS;
+		}
+	}
+	else
+	{
 		AIUnitData = XComGameState_AIUnitData(`XCOMHISTORY.GetGameStateForObjectID(m_kBehavior.GetAIUnitDataID(m_kUnitState.ObjectID)));
 		if( AIUnitData.JobIndex != INDEX_NONE && `AIJOBMGR.GetJobIndex(SplitNameParam) == AIUnitData.JobIndex )
 		{
 			return BTS_SUCCESS;
 		}
-		break;
 	}
 	return BTS_FAILURE;
 }
