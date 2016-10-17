@@ -18,8 +18,18 @@ static event bool FindBTActionDelegate(name strName, optional out delegate<BTAct
 function bt_status PlayAnimation()
 {
 	local XComGameState NewGameState;
+	local XComGameState_Unit NewUnitState;
+	local UnitValue Value;
+
+	if (m_kUnitState.GetUnitValue('PlayedSOAIAnimation', Value))
+		return BTS_SUCCESS;
 
 	NewGameState = class'XComGameStateContext_ChangeContainer'.static.CreateChangeState(string(GetFuncName()));
+	NewUnitState = XComGameState_Unit(NewGameState.CreateStateObject(m_kUnitState.class, m_kUnitState.ObjectID));
+	NewGameState.AddStateObject(NewUnitState);
+
+	NewUnitState.SetUnitFloatValue('PlayedSOAIAnimation', 1);
+
 	XComGameStateContext_ChangeContainer(NewGameState.GetContext()).BuildVisualizationFn = PlayAnimation_BuildVisualization;
 	`TACTICALRULES.SubmitGameState(NewGameState);
 
