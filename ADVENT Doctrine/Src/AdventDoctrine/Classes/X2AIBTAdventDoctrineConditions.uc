@@ -12,6 +12,12 @@ static event bool FindBTConditionDelegate(name strName, optional out delegate<BT
 		return true;
 	}
 
+	if (ParseNameForNameAbilitySplit(strName, "IsMyPreferredJob-", NameParam))
+	{
+		dOutFn = IsMyPreferredJob;
+		return true;
+	}
+
 	return false;
 }
 
@@ -34,3 +40,21 @@ function bt_status DoesTargetHaveItem()
 
 	return BTS_FAILURE;
 }
+
+function bt_status IsMyPreferredJob()
+{
+	local XComGameState_AIUnitData AIUnitData;
+
+	switch (m_kUnitState.GetMyTemplateName())
+	{
+	default:
+		AIUnitData = XComGameState_AIUnitData(`XCOMHISTORY.GetGameStateForObjectID(m_kBehavior.GetAIUnitDataID(m_kUnitState.ObjectID)));
+		if( AIUnitData.JobIndex != INDEX_NONE && `AIJOBMGR.GetJobIndex(SplitNameParam) == AIUnitData.JobIndex )
+		{
+			return BTS_SUCCESS;
+		}
+		break;
+	}
+	return BTS_FAILURE;
+}
+
