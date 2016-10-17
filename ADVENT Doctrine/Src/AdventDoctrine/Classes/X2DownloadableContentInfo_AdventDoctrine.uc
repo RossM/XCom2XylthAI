@@ -1,14 +1,6 @@
-//---------------------------------------------------------------------------------------
-//  FILE:   XComDownloadableContentInfo_BlackOps.uc                                    
-//           
-//	Use the X2DownloadableContentInfo class to specify unique mod behavior when the 
-//  player creates a new campaign or loads a saved game.
-//  
-//---------------------------------------------------------------------------------------
-//  Copyright (c) 2016 Firaxis Games, Inc. All rights reserved.
-//---------------------------------------------------------------------------------------
+class X2DownloadableContentInfo_AdventDoctrine extends X2DownloadableContentInfo config(ImmersiveAI);
 
-class X2DownloadableContentInfo_AdventDoctrine extends X2DownloadableContentInfo;
+var config array<string> ObsoleteAIRoots;
 
 /// <summary>
 /// This method is run if the player loads a saved game that was created prior to this DLC / Mod being installed, and allows the 
@@ -51,6 +43,15 @@ static event OnPostTemplatesCreated()
 			if (Template.bIsAdvent || Template.bIsAlien)
 			{
 				Template.Abilities.AddItem('ShowGenericAIFlyover');
+			}
+
+			if (default.ObsoleteAIRoots.Find(Template.strBehaviorTree) != INDEX_NONE)
+			{
+				Template.strBehaviorTree = "GenericAIRoot";
+			}
+			else if (Template.strBehaviorTree != "GenericAIRoot")
+			{
+				`Log("AdventDoctrine:" @ Template.DataName @ "has AI root" @ Template.strBehaviorTree);
 			}
 		}
 	}

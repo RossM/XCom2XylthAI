@@ -42,6 +42,9 @@ Good luck, Commander</Description>
     <Content Include="Config\XComGameCore.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComImmersiveAI.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Localization\XComGame.int">
       <SubType>Content</SubType>
     </Content>
