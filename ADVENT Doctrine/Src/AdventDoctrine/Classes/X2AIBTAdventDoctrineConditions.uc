@@ -54,10 +54,10 @@ function bt_status IsMyPreferredJob()
 	local XComGameState_AIUnitData AIUnitData;
 	local int index;
 
-	index = default.AIConfigs.Find('DataName', m_kUnitState.GetMyTemplateName());
+	index = default.AIConfig.Find('DataName', m_kUnitState.GetMyTemplateName());
 	if (index != INDEX_NONE)
 	{
-		if (default.AIConfigs[index].Job ~= SplitNameParam)
+		if (default.AIConfig[index].Job ~= string(SplitNameParam))
 		{
 			return BTS_SUCCESS;
 		}
