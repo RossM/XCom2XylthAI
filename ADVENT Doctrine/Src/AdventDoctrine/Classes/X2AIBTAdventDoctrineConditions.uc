@@ -1,13 +1,5 @@
 class X2AIBTAdventDoctrineConditions extends X2AIBTDefaultConditions config(ImmersiveAI);
 
-struct AIConfigData
-{
-	var name DataName;
-	var string Job;
-};
-
-var config array<AIConfigData> AIConfig;
-
 static event bool FindBTConditionDelegate(name strName, optional out delegate<BTConditionDelegate> dOutFn, optional out Name NameParam)
 {
 	// Was hoping to use a hash map for names to delegates, but that may not be valid.
@@ -52,12 +44,12 @@ function bt_status DoesTargetHaveItem()
 function bt_status IsMyPreferredJob()
 {
 	local XComGameState_AIUnitData AIUnitData;
-	local int index;
+	local array<name> Jobs;
 
-	index = default.AIConfig.Find('DataName', m_kUnitState.GetMyTemplateName());
-	if (index != INDEX_NONE)
+	class'Configuration'.static.FindJobs( m_kUnitState.GetMyTemplateName(), Jobs);
+	if (Jobs.Length > 0)
 	{
-		if (default.AIConfig[index].Job ~= string(SplitNameParam))
+		if (Jobs[0] == SplitNameParam)
 		{
 			return BTS_SUCCESS;
 		}

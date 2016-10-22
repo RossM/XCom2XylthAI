@@ -52,6 +52,12 @@ Good luck, Commander</Description>
       <SubType>Content</SubType>
     </Content>
     <Content Include="ReadMe.txt" />
+    <Content Include="Src\AdventDoctrine\Classes\Configuration.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AdventDoctrine\Classes\UIScreenListener_TacticalHUD.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\AdventDoctrine\Classes\X2Ability_AdventDoctrine.uc">
       <SubType>Content</SubType>
     </Content>
