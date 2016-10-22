@@ -23,7 +23,9 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	local name JobName;
 	local array<name> Jobs;
 	local bool bSubmitState;
-	local int index;
+	local int index, newIndex, i;
+	local array<int> JobCount;
+	local array<XComGameState_Unit> AssignableUnits;
 
 	SourcePlayer = XComGameState_Player(EventSource);
 	if (SourcePlayer == none || SourcePlayer.TeamFlag != eTeam_Alien)
@@ -42,6 +44,8 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	JobMgr = `AIJOBMGR;
 	History = `XCOMHISTORY;
 
+	JobCount.Length = JobMgr.JobListings.Length;
+
 	// Reset all applicable units to their preferred job
 	foreach History.IterateByClassType(class'XComGameState_AIUnitData', AIUnitData)
 	{
@@ -58,10 +62,40 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 
 			if (Jobs.Length > 0)
 			{
+				AssignableUnits.AddItem(UnitState);
 				JobMgr.GetJobListing(Jobs[0], index);
 				JobMgr.AssignUnitToJob(AIUnitData.ObjectID, index, JobMgr.JobAssignments.Length, NewGameState);
+				JobCount[index]++;
+			}
+			else
+			{
+				JobCount[AIUnitData.JobIndex]++;
 			}
 		}
+	}
+
+	// Sort units by max HP, least to most
+	AssignableUnits.Sort(SortUnitsByHP);
+
+	// Reassign units to make job distribution more even
+	foreach AssignableUnits(UnitState)
+	{
+		class'Configuration'.static.FindJobs(UnitState.GetMyTemplateName(), Jobs);
+		JobMgr.GetJobListing(Jobs[0], index);
+		for (i = 1; i < Jobs.Length; i++)
+		{
+			JobMgr.GetJobListing(Jobs[i], newIndex);
+
+			// Change if it would make job counts more equal
+			if (JobCount[index] - 1 >= JobCount[newIndex] + 1)
+			{
+				JobCount[index]--;
+				JobCount[newIndex]++;
+				index = newIndex;
+			}
+		}
+
+		JobMgr.AssignUnitToJob(UnitState.GetAIUnitDataID(), index, JobMgr.JobAssignments.Length, NewGameState);
 	}
 
 	if (bSubmitState)
@@ -77,6 +111,17 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	}
 
 	return ELR_NoInterrupt;
+}
+
+static function int SortUnitsByHP(XComGameState_Unit UnitA, XComGameState_Unit UnitB)
+{
+	local int HPDiff;
+
+	HPDiff = UnitB.GetMaxStat(eStat_HP) - UnitA.GetMaxStat(eStat_HP);
+	if (HPDiff != 0)
+		return HPDiff;
+
+	return UnitB.ObjectID - UnitA.ObjectID;
 }
 
 
