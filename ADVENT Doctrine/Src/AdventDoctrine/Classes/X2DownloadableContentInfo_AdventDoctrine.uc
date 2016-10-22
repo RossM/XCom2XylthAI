@@ -56,3 +56,24 @@ static event OnPostTemplatesCreated()
 		}
 	}
 }
+
+exec function DumpJobs()
+{
+	local X2AIJobManager JobMgr;
+	local XComGameState_AIUnitData AIUnitData;
+	local XComGameState_Unit UnitState;
+	local XComGameStateHistory History;
+
+	JobMgr = `AIJOBMGR;
+	History = `XCOMHISTORY;
+
+	foreach History.IterateByClassType(class'XComGameState_AIUnitData', AIUnitData)
+	{
+		if (AIUnitData.JobIndex != INDEX_NONE)
+		{
+			UnitState = XComGameState_Unit(History.GetGameStateForObjectID(AIUnitData.m_iUnitObjectID));
+
+			`Log(UnitState @ "(" $ UnitState.GetMyTemplateName() $ ") :" @ JobMgr.GetJobName(AIUnitData.JobIndex));
+		}
+	}
+}

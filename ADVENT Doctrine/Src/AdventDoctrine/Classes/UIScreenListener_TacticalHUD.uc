@@ -9,7 +9,7 @@ event OnInit(UIScreen Screen)
 
 	ListenerObj = self;
 
-	EventMgr.RegisterForEvent(ListenerObj, 'PlayTurnBegun', AssignAIJobs, ELD_OnStateSubmitted);
+	EventMgr.RegisterForEvent(ListenerObj, 'PlayerTurnBegun', AssignAIJobs, ELD_OnStateSubmitted);
 }
 
 static function EventListenerReturn AssignAIJobs(Object EventData, Object EventSource, XComGameState GameState, Name EventID)
