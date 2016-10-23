@@ -12,6 +12,12 @@ static event bool FindBTConditionDelegate(name strName, optional out delegate<BT
 		return true;
 	}
 
+	if (ParseNameForNameAbilitySplit(strName, "HasItem-", NameParam))
+	{
+		dOutFn = HasItem;
+		return true;
+	}
+
 	if (ParseNameForNameAbilitySplit(strName, "IsMyPreferredJob-", NameParam))
 	{
 		dOutFn = IsMyPreferredJob;
@@ -41,27 +47,43 @@ function bt_status DoesTargetHaveItem()
 	return BTS_FAILURE;
 }
 
+function bt_status HasItem()
+{
+	local array<XComGameState_Item> CurrentInventory;
+	local XComGameState_Item Item;
+
+	CurrentInventory = m_kUnitState.GetAllInventoryItems();
+
+	foreach CurrentInventory(Item)
+	{
+		if (Item.GetMyTemplateName() == SplitNameParam)
+			return BTS_SUCCESS;
+	}
+
+	return BTS_FAILURE;
+}
+
 function bt_status IsMyPreferredJob()
 {
 	local XComGameState_AIUnitData AIUnitData;
-	local array<name> Jobs;
+	//local array<name> Jobs;
 
-	class'Configuration'.static.FindJobs( m_kUnitState.GetMyTemplateName(), Jobs);
-	if (Jobs.Length > 0)
-	{
-		if (Jobs[0] == SplitNameParam)
-		{
-			return BTS_SUCCESS;
-		}
-	}
-	else
-	{
+	//class'Configuration'.static.FindJobs( m_kUnitState.GetMyTemplateName(), Jobs);
+	//if (Jobs.Length > 0)
+	//{
+		//if (Jobs[0] == SplitNameParam)
+		//{
+			//return BTS_SUCCESS;
+		//}
+	//}
+	//else
+	//{
 		AIUnitData = XComGameState_AIUnitData(`XCOMHISTORY.GetGameStateForObjectID(m_kBehavior.GetAIUnitDataID(m_kUnitState.ObjectID)));
 		if( AIUnitData.JobIndex != INDEX_NONE && `AIJOBMGR.GetJobIndex(SplitNameParam) == AIUnitData.JobIndex )
 		{
 			return BTS_SUCCESS;
 		}
-	}
+	//}
 	return BTS_FAILURE;
 }
 

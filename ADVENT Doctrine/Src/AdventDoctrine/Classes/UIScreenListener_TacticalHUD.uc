@@ -26,6 +26,7 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	local int index, newIndex, i;
 	local array<int> JobCount;
 	local array<XComGameState_Unit> AssignableUnits;
+	local XGAIBehavior Behavior;
 
 	SourcePlayer = XComGameState_Player(EventSource);
 	if (SourcePlayer == none || SourcePlayer.TeamFlag != eTeam_Alien)
@@ -53,24 +54,37 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 		{
 			JobName = JobMgr.GetJobName(AIUnitData.JobIndex);
 
-			// Skip unengaged jobs
+			// Skip units with unengaged jobs, even if they are engaged
 			if( JobMgr.GetJobListing(JobName).bRequiresEngagement == false )
 				continue;
+		}
 
-			UnitState = XComGameState_Unit(History.GetGameStateForObjectID(AIUnitData.m_iUnitObjectID));
-			class'Configuration'.static.FindJobs(UnitState.GetMyTemplateName(), Jobs);
+		UnitState = XComGameState_Unit(History.GetGameStateForObjectID(AIUnitData.m_iUnitObjectID));
 
-			if (Jobs.Length > 0)
-			{
-				AssignableUnits.AddItem(UnitState);
-				JobMgr.GetJobListing(Jobs[0], index);
-				JobMgr.AssignUnitToJob(AIUnitData.ObjectID, index, JobMgr.JobAssignments.Length, NewGameState);
-				JobCount[index]++;
-			}
-			else
-			{
+		// Skip unrevealed AI (they are not engaged)
+		if (UnitState.IsUnrevealedAI())
+			continue;
+
+		Behavior = XGUnit(UnitState.GetVisualizer()).m_kBehavior;
+
+		// Skip unengaged AI
+		if (Behavior == none || (UnitState.GetCurrentStat(eStat_AlertLevel) != `ALERT_LEVEL_RED && !Behavior.IsOrangeAlert()))
+			continue;
+
+		class'Configuration'.static.FindJobs(UnitState.GetMyTemplateName(), Jobs);
+
+		if (Jobs.Length > 0)
+		{
+			AssignableUnits.AddItem(UnitState);
+			JobMgr.GetJobListing(Jobs[0], index);
+			JobMgr.AssignUnitToJob(AIUnitData.ObjectID, index, JobMgr.JobAssignments.Length, NewGameState);
+			JobCount[index]++;
+		}
+		else
+		{
+			`Log("AssignAIJobs:" @ UnitState.GetMyTemplateName() @ "has no job listing in XComImmersiveAI.ini");
+			if (AIUnitData.JobIndex != INDEX_NONE)
 				JobCount[AIUnitData.JobIndex]++;
-			}
 		}
 	}
 
@@ -121,7 +135,8 @@ static function int SortUnitsByHP(XComGameState_Unit UnitA, XComGameState_Unit U
 	if (HPDiff != 0)
 		return HPDiff;
 
-	return UnitB.ObjectID - UnitA.ObjectID;
+	// Sort in REVERS objectid ornder
+	return UnitA.ObjectID - UnitB.ObjectID;
 }
 
 
