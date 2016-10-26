@@ -30,6 +30,9 @@ Good luck, Commander</Description>
     <Content Include="Config\XComAI.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComAIJobs.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComEditor.ini">
       <SubType>Content</SubType>
     </Content>
