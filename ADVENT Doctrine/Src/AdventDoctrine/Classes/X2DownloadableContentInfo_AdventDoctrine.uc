@@ -1,6 +1,7 @@
 class X2DownloadableContentInfo_AdventDoctrine extends X2DownloadableContentInfo config(ImmersiveAI);
 
 var config array<string> ObsoleteAIRoots;
+var config string NewAIRoot;
 
 /// <summary>
 /// This method is run if the player loads a saved game that was created prior to this DLC / Mod being installed, and allows the 
@@ -47,9 +48,9 @@ static event OnPostTemplatesCreated()
 
 			if (default.ObsoleteAIRoots.Find(Template.strBehaviorTree) != INDEX_NONE)
 			{
-				Template.strBehaviorTree = "GenericAIRoot";
+				Template.strBehaviorTree = default.NewAIRoot;
 			}
-			else if (Template.strBehaviorTree != "GenericAIRoot")
+			else if (Template.strBehaviorTree != default.NewAIRoot)
 			{
 				`Log("AdventDoctrine:" @ Template.DataName @ "has AI root" @ Template.strBehaviorTree);
 			}
