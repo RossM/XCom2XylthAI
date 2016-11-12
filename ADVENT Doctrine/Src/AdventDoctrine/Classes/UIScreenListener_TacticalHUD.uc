@@ -23,7 +23,7 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	local name JobName;
 	local array<name> Jobs;
 	local bool bSubmitState;
-	local int index, newIndex, i;
+	local int index, newIndex, i, leaderIndex;
 	local array<int> JobCount;
 	local array<XComGameState_Unit> AssignableUnits;
 	local XGAIBehavior Behavior;
@@ -91,16 +91,46 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 	// Sort units by max HP, least to most
 	AssignableUnits.Sort(SortUnitsByHP);
 
+	// Find a Leader if no unit had leader as their 1st choice
+	JobMgr.GetJobListing('Leader', leaderIndex);
+	if (JobCount[leaderIndex] == 0)
+	{
+		for (i = AssignableUnits.Length - 1; i >= 0; i--)
+		{
+			UnitState = AssignableUnits[i];
+			class'Configuration'.static.FindJobs(UnitState.GetMyTemplateName(), Jobs);
+
+			newIndex = Jobs.Find('Leader');
+			if (newIndex != INDEX_NONE)
+			{
+				AIUnitData = XComGameState_AIUnitData(History.GetGameStateForObjectID(UnitState.GetAIUnitDataID()));
+				index = AIUnitData.JobIndex;
+
+				JobCount[index]--;
+				JobCount[newIndex]++;
+				index = newIndex;
+
+				JobMgr.AssignUnitToJob(UnitState.GetAIUnitDataID(), index, JobMgr.JobAssignments.Length, NewGameState);
+			}
+		}
+	}
+
 	// Reassign units to make job distribution more even
 	foreach AssignableUnits(UnitState)
 	{
 		class'Configuration'.static.FindJobs(UnitState.GetMyTemplateName(), Jobs);
-		JobMgr.GetJobListing(Jobs[0], index);
-		for (i = 1; i < Jobs.Length; i++)
+
+		AIUnitData = XComGameState_AIUnitData(History.GetGameStateForObjectID(UnitState.GetAIUnitDataID()));
+		index = AIUnitData.JobIndex;
+
+		for (i = 0; i < Jobs.Length; i++)
 		{
+			if (Jobs[i] == 'Leader')
+				continue;
+
 			JobMgr.GetJobListing(Jobs[i], newIndex);
 
-			// Change if it would make job counts more equal
+			// Change if it would make job counts more equal, but never change to Leader
 			if (JobCount[index] - 1 >= JobCount[newIndex] + 1)
 			{
 				JobCount[index]--;
@@ -109,7 +139,8 @@ static function EventListenerReturn AssignAIJobs(Object EventData, Object EventS
 			}
 		}
 
-		JobMgr.AssignUnitToJob(UnitState.GetAIUnitDataID(), index, JobMgr.JobAssignments.Length, NewGameState);
+		if (index != AIUnitData.JobIndex)
+			JobMgr.AssignUnitToJob(UnitState.GetAIUnitDataID(), index, JobMgr.JobAssignments.Length, NewGameState);
 	}
 
 	if (bSubmitState)
