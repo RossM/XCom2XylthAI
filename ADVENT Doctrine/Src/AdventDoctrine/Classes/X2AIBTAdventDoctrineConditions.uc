@@ -24,6 +24,13 @@ static event bool FindBTConditionDelegate(name strName, optional out delegate<BT
 		return true;
 	}
 
+	switch (NameParam)
+	{
+	case 'CanTakeCover':
+		dOutFn = CanTakeCover;
+		return true;
+	}
+
 	return false;
 }
 
@@ -87,3 +94,7 @@ function bt_status IsMyPreferredJob()
 	return BTS_FAILURE;
 }
 
+function bt_status CanTakeCover()
+{
+	return m_kUnitState.GetMyTemplate().bCanTakeCover ? BTS_SUCCESS : BTS_FAILURE;
+}
