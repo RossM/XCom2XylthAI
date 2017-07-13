@@ -28,8 +28,10 @@ static event OnPostTemplatesCreated()
 	local X2CharacterTemplate Template;
 	local array<X2DataTemplate> DataTemplateAllDifficulties;
 	local X2CharacterTemplateManager CharacterMgr;
+	local X2AIJobManager JobManager;
 	local array<name> TemplateNames;
 	local name TemplateName;
+	local int i, j;
 
 	CharacterMgr = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
 
@@ -55,6 +57,14 @@ static event OnPostTemplatesCreated()
 				`Log("AdventDoctrine:" @ Template.DataName @ "has AI root" @ Template.strBehaviorTree);
 			}
 		}
+	}
+
+	JobManager = class'X2AIJobManager'.static.GetAIJobManager();
+	for (i = 0; i < JobManager.JobListings.Length; i++)
+	{
+		j = class'Configuration'.default.JobConfig.Find('JobName', JobManager.JobListings[i].JobName);
+		if (j != INDEX_NONE)
+			JobManager.JobListings[i].MoveOrderPriority = class'Configuration'.default.JobConfig[j].MoveOrderPriority;
 	}
 }
 
