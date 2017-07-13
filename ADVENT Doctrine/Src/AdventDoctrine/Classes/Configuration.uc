@@ -29,3 +29,14 @@ static function FindJobs(name DataName, out array<name> Jobs)
 		Jobs.Length = 0;
 	}
 }
+
+static function bool FindJobConfig(name JobName, out AIJobConfigData Data)
+{
+	local int index;
+
+	index = default.JobConfig.Find('JobName', JobName);
+	if (Index == INDEX_NONE)
+		return false;
+	Data = default.JobConfig[index];
+	return true;
+}

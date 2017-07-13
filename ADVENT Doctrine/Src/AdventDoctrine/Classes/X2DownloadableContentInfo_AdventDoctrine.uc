@@ -29,9 +29,10 @@ static event OnPostTemplatesCreated()
 	local array<X2DataTemplate> DataTemplateAllDifficulties;
 	local X2CharacterTemplateManager CharacterMgr;
 	local X2AIJobManager JobManager;
+	local AIJobConfigData JobConfig;
 	local array<name> TemplateNames;
 	local name TemplateName;
-	local int i, j;
+	local int i;
 
 	CharacterMgr = class'X2CharacterTemplateManager'.static.GetCharacterTemplateManager();
 
@@ -62,9 +63,10 @@ static event OnPostTemplatesCreated()
 	JobManager = class'X2AIJobManager'.static.GetAIJobManager();
 	for (i = 0; i < JobManager.JobListings.Length; i++)
 	{
-		j = class'Configuration'.default.JobConfig.Find('JobName', JobManager.JobListings[i].JobName);
-		if (j != INDEX_NONE)
-			JobManager.JobListings[i].MoveOrderPriority = class'Configuration'.default.JobConfig[j].MoveOrderPriority;
+		if (class'Configuration'.static.FindJobConfig(JobManager.JobListings[i].JobName, JobConfig))
+		{
+			JobManager.JobListings[i].MoveOrderPriority = JobConfig.MoveOrderPriority;
+		}
 	}
 }
 
